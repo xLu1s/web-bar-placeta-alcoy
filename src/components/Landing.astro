@@ -13,20 +13,18 @@ const starString = (value: number) => {
 const mapSrc = `https://maps.google.com/maps?q=${site.geo.lat},${site.geo.lng}&z=17&hl=es&output=embed`;
 const mapLink = `https://www.google.com/maps/search/?api=1&query=${site.geo.lat},${site.geo.lng}`;
 
-const themes = [
-  {
-    title: 'Terraza en la placeta',
-    text: 'Un rincón tranquilo en pleno centro para tapear al sol.',
-  },
-  {
-    title: 'Relación calidad-precio',
-    text: 'Tapas generosas y buen precio, como los bares de barrio de siempre.',
-  },
-  {
-    title: 'Trato cercano y servicio rápido',
-    text: 'Atención de toda la vida: rápida, amable y sin complicaciones.',
-  },
-];
+const icons = {
+  beer: '<path d="M17 11h1a3 3 0 0 1 0 6h-1"></path><path d="M9 12v6"></path><path d="M13 12v6"></path><path d="M14 7.5c0-1-1-1.5-1-3 0 1.5-1 2-1 3"></path><path d="M5 7h14v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path>',
+  coffee: '<path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"></path><path d="M6 2v3"></path><path d="M10 2v3"></path><path d="M14 2v3"></path>',
+  tapas: '<path d="M3 11l9-8 9 8"></path><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"></path><circle cx="12" cy="14" r="2"></circle>',
+  sun: '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>',
+  group: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>',
+  calendar: '<rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path>',
+  glass: '<path d="M8 22h8"></path><path d="M12 11v11"></path><path d="m19 3-7 8-7-8z"></path>',
+};
+
+const phoneIcon =
+  '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>';
 ---
 
 <header class="app-bar" id="app-bar">
@@ -60,10 +58,8 @@ const themes = [
     <nav class="nav" id="nav" aria-label="Principal">
       {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
       <a class="btn btn--desktop" href={site.contact.phoneHref}>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
-        </svg>
-        Llamar
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={phoneIcon}></svg>
+        Reservar
       </a>
     </nav>
   </div>
@@ -72,89 +68,74 @@ const themes = [
 <main id="contenido">
   <!-- HERO -->
   <section class="hero" id="inicio">
-    <div class="hero__bg" aria-hidden="true"></div>
-    <div class="container hero__grid">
-      <div data-reveal>
+    <div class="hero__media">
+      {site.hero.hasVideo && (
+        <video
+          class="hero__video"
+          autoplay
+          muted
+          loop
+          playsinline
+          poster={site.hero.poster}
+          aria-hidden="true">
+          <source src={site.hero.video} type="video/mp4" />
+        </video>
+      )}
+      <div class="hero__scrim" aria-hidden="true"></div>
+    </div>
+
+    <div class="container hero__content">
+      <span class="hero__kicker">Cervecería · Tapas · Alcoi</span>
+      <h1>
+        La tapa, en el <span class="accent">corazón de Alcoy</span>
+      </h1>
+      <p class="hero__lead">
+        Cerveza bien tirada, tapas para compartir y desayunos de barrio en el casco
+        histórico. Un clásico donde siempre apetece parar.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--lg" href={site.contact.phoneHref}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={phoneIcon}></svg>
+          Llamar y reservar
+        </a>
+        <a class="btn btn--light btn--lg" href="#carta">Ver la carta</a>
+      </div>
+
+      <div class="hero__meta">
         <span class="status" id="open-status" data-state="unknown">
           <span id="open-status-text">Consultando horario…</span>
         </span>
-        <h1>
-          Tapas con alma en el <span class="accent">centro de Alcoy</span>
-        </h1>
-        <p class="hero__lead">
-          {site.name} es ese bar de barrio del casco histórico donde siempre apetece
-          parar: cervezas bien tiradas, bocadillos, desayunos y tapas para compartir
-          en una placeta tranquila.
-        </p>
-        <div class="hero__actions">
-          <a class="btn btn--lg" href={site.contact.phoneHref}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
-            Llamar y reservar
-          </a>
-          <a class="btn btn--outline btn--lg" href="#carta">Ver la carta</a>
-        </div>
-        <div class="hero__meta">
-          <span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            {site.address.street}, {site.address.locality}
-          </span>
-          <span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            {site.contact.phone}
-          </span>
-        </div>
-      </div>
-
-      <div class="hero__badge" data-reveal>
-        <span class="stars" aria-hidden="true">{starString(site.rating.value)}</span>
-        <strong>{ratingText}</strong>
-        <span>{site.rating.count} reseñas en Google</span>
-        <em>Tapas &amp; cerveza</em>
+        <span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          {site.address.street}, {site.address.locality}
+        </span>
+        <span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 15 9l7 .5-5.5 4.5 2 7L12 17.3 5.5 21l2-7L2 9.5 9 9z" fill="currentColor" stroke="none"></path></svg>
+          {ratingText}★ · {site.rating.count} reseñas
+        </span>
       </div>
     </div>
   </section>
 
-  <!-- SOBRE NOSOTROS -->
-  <section class="section" id="sobre-nosotros">
-    <div class="container story">
-      <div data-reveal>
-        <span class="eyebrow">Quiénes somos</span>
-        <h2>Un clásico del casco histórico de Alcoi</h2>
-        <p>
-          En una placeta tranquila del centro, a un paso de los teatros y del
-          recorrido de las Fiestas de Moros y Cristianos, La Placeta es punto de
-          encuentro para vecinos, festeros y visitantes.
-        </p>
-        <p>
-          Aquí se viene a lo de siempre: un café por la mañana, una caña a mediodía
-          o unas tapas al caer la tarde. Cocina honesta, producto de siempre y un
-          trato que hace que te sientas como en casa.
-        </p>
+  <!-- CONCEPTO -->
+  <section class="section" id="concepto">
+    <div class="container concept">
+      <div class="concept__intro" data-reveal>
+        <span class="eyebrow">{site.concept.eyebrow}</span>
+        <h2>{site.concept.title}</h2>
+        <p class="concept__lead">{site.concept.lead}</p>
+        {site.concept.paragraphs.map((text) => <p>{text}</p>)}
       </div>
 
-      <div class="story__panel" data-reveal>
-        <h3>Lo que nos hace La Placeta</h3>
-        <ul class="story__facts">
+      <ul class="pillars" data-reveal>
+        {site.concept.pillars.map((pillar) => (
           <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
-            <span>Cervezas nacionales e importación</span>
+            <span class="pillars__dot" aria-hidden="true"></span>
+            <strong>{pillar.title}</strong>
+            <span>{pillar.text}</span>
           </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
-            <span>Tapas, bocadillos y tostadas hechos al momento</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
-            <span>Desayunos de barrio y terraza exterior</span>
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
-            <span>Menús a tu gusto con lista de alérgenos</span>
-          </li>
-        </ul>
-      </div>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -210,52 +191,78 @@ const themes = [
     <div class="container">
       <div class="section-head section-head--center" data-reveal>
         <span class="eyebrow">Especialidades</span>
-        <h2>Lo que más nos piden</h2>
+        <h2>Lo que nos hace La Placeta</h2>
         <p>De la primera caña del día a la última tapa de la noche.</p>
       </div>
 
-      <div class="grid grid--3">
-        {site.specialties.map((item) => (
-          <article class="card" data-reveal>
-            <div class="card__icon">
-              {item.icon === 'beer' && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 11h1a3 3 0 0 1 0 6h-1"></path><path d="M9 12v6"></path><path d="M13 12v6"></path><path d="M14 7.5c0-1-1-1.5-1-3 0 1.5-1 2-1 3"></path><path d="M5 7h14v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path></svg>
-              )}
-              {item.icon === 'coffee' && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"></path><path d="M6 2v3"></path><path d="M10 2v3"></path><path d="M14 2v3"></path></svg>
-              )}
-              {item.icon === 'sun' && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
-              )}
+      <div class="spec-list">
+        {site.specialties.map((item, index) => (
+          <article class={`spec-item ${index % 2 === 1 ? 'spec-item--reverse' : ''}`} data-reveal>
+            <div class="spec-item__media">
+              <img src={item.image} alt={item.title} loading="lazy" width="720" height="520" />
             </div>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
+            <div class="spec-item__body">
+              <div class="card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[item.icon as keyof typeof icons]}></svg>
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  {site.gallery.length > 0 && (
-    <section class="section section--alt" id="galeria">
-      <div class="container">
-        <div class="section-head section-head--center" data-reveal>
-          <span class="eyebrow">Galería</span>
-          <h2>Un vistazo a La Placeta</h2>
-        </div>
-        <div class="gallery" data-reveal>
-          {site.gallery.map((image) => (
-            <a href={image.src} target="_blank" rel="noopener">
-              <img src={image.src} alt={image.alt} loading="lazy" />
-            </a>
-          ))}
-        </div>
+  <!-- EVENTOS -->
+  <section class="section section--alt" id="eventos">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow">{site.events.eyebrow}</span>
+        <h2>{site.events.title}</h2>
+        <p>{site.events.lead}</p>
       </div>
-    </section>
-  )}
+
+      <div class="grid grid--3">
+        {site.events.items.map((item) => (
+          <article class="card card--event" data-reveal>
+            <div class="card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[item.icon as keyof typeof icons]}></svg>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="section-head section-head--center" style="margin-top:2rem;margin-bottom:0" data-reveal>
+        <a class="btn btn--lg" href={site.contact.phoneHref}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={phoneIcon}></svg>
+          {site.events.cta}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="section" id="galeria">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow">Galería</span>
+        <h2>Un vistazo a La Placeta</h2>
+      </div>
+      <div class="gallery" data-reveal>
+        {site.gallery.map((image) => (
+          <a href={image.src} target="_blank" rel="noopener">
+            <img src={image.src} alt={image.alt} loading="lazy" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <!-- OPINIONES -->
-  <section class="section" id="opiniones">
+  <section class="section section--alt" id="opiniones">
     <div class="container">
       <div class="section-head section-head--center" data-reveal>
         <span class="eyebrow">Opiniones</span>
@@ -264,12 +271,12 @@ const themes = [
       </div>
 
       <div class="reviews">
-        {themes.map((theme) => (
-          <article class="review" data-reveal>
+        {site.reviews.map((review) => (
+          <figure class="review" data-reveal>
             <span class="stars" aria-hidden="true">★★★★★</span>
-            <blockquote>{theme.text}</blockquote>
-            <figcaption>{theme.title}</figcaption>
-          </article>
+            <blockquote>“{review.text}”</blockquote>
+            <figcaption>{review.author}</figcaption>
+          </figure>
         ))}
       </div>
 
@@ -280,7 +287,7 @@ const themes = [
   </section>
 
   <!-- HORARIO Y UBICACIÓN -->
-  <section class="section section--alt" id="horario">
+  <section class="section" id="horario">
     <div class="container">
       <div class="section-head" data-reveal>
         <span class="eyebrow">Horario y ubicación</span>
@@ -324,7 +331,7 @@ const themes = [
   </section>
 
   <!-- FAQ -->
-  <section class="section" id="faq">
+  <section class="section section--alt" id="faq">
     <div class="container">
       <div class="section-head section-head--center" data-reveal>
         <span class="eyebrow">Preguntas frecuentes</span>
@@ -343,7 +350,7 @@ const themes = [
   </section>
 
   <!-- CONTACTO -->
-  <section class="section section--alt" id="contacto">
+  <section class="section contact-cta" id="contacto">
     <div class="container contact">
       <div class="contact-card" data-reveal>
         <span class="eyebrow" style="color:var(--brand-gold)">Reservas y contacto</span>
@@ -351,7 +358,7 @@ const themes = [
         <p>Llámanos y te ayudamos a organizar tu visita o tu grupo.</p>
         <ul class="contact-list">
           <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={phoneIcon}></svg>
             <a href={site.contact.phoneHref}>{site.contact.phone}</a>
           </li>
           <li>
@@ -413,8 +420,8 @@ const themes = [
 </footer>
 
 <a class="fab" href={site.contact.phoneHref} aria-label={`Llamar a ${site.name}`}>
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-  Llamar
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={phoneIcon}></svg>
+  Reservar
 </a>
 
 <script type="application/json" id="hours-data" set:html={JSON.stringify(site.hours)}></script>

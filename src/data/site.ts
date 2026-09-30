@@ -196,25 +196,90 @@ export const site = {
     ] as MenuCategory[],
   },
 
+  hero: {
+    video: `${BASE}video/hero.mp4`,
+    poster: `${BASE}images/hero.jpg`,
+    hasVideo: false,
+  },
+
+  concept: {
+    eyebrow: 'El concepto',
+    title: 'La tapa, en el centro de Alcoy',
+    lead: 'Tapear es compartir. Y en La Placeta lo hacemos como manda la tradición: platos al centro, cañas bien frías y sobremesa sin prisa.',
+    paragraphs: [
+      'En el corazón del casco histórico de Alcoi, entre calles de piedra y a un paso de la plaça d’Espanya, La Placeta es punto de encuentro de vecinos, festeros y viajeros.',
+      'Nuestra cocina es honesta y de siempre: producto de mercado, recetas de casa y ese sabor que solo tienen los bares de barrio que cuidan cada detalle.',
+    ],
+    pillars: [
+      { title: 'Producto de siempre', text: 'Género fresco y de temporada, sin atajos.' },
+      { title: 'Para compartir', text: 'Tapas pensadas para ir al centro de la mesa.' },
+      { title: 'Precio justo', text: 'La buena relación calidad-precio de toda la vida.' },
+      { title: 'Trato cercano', text: 'Servicio rápido, amable y familiar.' },
+    ],
+  },
+
   specialties: [
     {
       icon: 'beer',
       title: 'Cervezas con carácter',
       text: 'Variedad de cervezas nacionales e importación, bien tiradas y a su temperatura.',
+      image: `${BASE}images/especialidad-cerveza.jpg`,
+    },
+    {
+      icon: 'tapas',
+      title: 'Tapas para compartir',
+      text: 'Fríos, calientes, clásicos y de la casa: la mesa siempre llena al centro.',
+      image: `${BASE}images/especialidad-tapas.jpg`,
     },
     {
       icon: 'coffee',
       title: 'Desayunos de barrio',
       text: 'Empieza el día como en casa: tostadas, bocadillos y café de los de siempre.',
-    },
-    {
-      icon: 'sun',
-      title: 'Terraza en la placeta',
-      text: 'Un rincón tranquilo en pleno centro, a un paso de los teatros y del recorrido festero.',
+      image: `${BASE}images/especialidad-desayuno.jpg`,
     },
   ],
 
-  gallery: [] as GalleryImage[],
+  events: {
+    eyebrow: 'Eventos',
+    title: 'Celebra con nosotros',
+    lead: 'Grupos, cumpleaños, almuerzos, cenas de empresa o simplemente juntar a la cuadrilla: te preparamos la mesa y los menús a tu gusto.',
+    items: [
+      {
+        icon: 'group',
+        title: 'Grupos y celebraciones',
+        text: 'Menús a tu medida y espacio reservado para grupos grandes.',
+      },
+      {
+        icon: 'calendar',
+        title: 'Fiestas de Moros y Cristianos',
+        text: 'Vive la fiesta desde el centro, con el recorrido festero a un paso.',
+      },
+      {
+        icon: 'glass',
+        title: 'Almuerzos y cenas',
+        text: 'De la cervecita del mediodía a la cena tranquila de fin de semana.',
+      },
+    ],
+    cta: 'Organizar un evento',
+  },
+
+  gallery: [
+    { src: `${BASE}images/gallery-1.jpg`, alt: 'Cerveza recién tirada en La Placeta' },
+    { src: `${BASE}images/gallery-2.jpg`, alt: 'Tapas para compartir en La Placeta' },
+    { src: `${BASE}images/gallery-3.jpg`, alt: 'Bocadillo de La Placeta' },
+    { src: `${BASE}images/gallery-4.jpg`, alt: 'Terraza de La Placeta en el centro de Alcoy' },
+    { src: `${BASE}images/gallery-5.jpg`, alt: 'Interior del bar La Placeta' },
+    { src: `${BASE}images/gallery-6.jpg`, alt: 'Desayuno con tostada y café' },
+    { src: `${BASE}images/gallery-7.jpg`, alt: 'Detalle de tapas calientes' },
+    { src: `${BASE}images/gallery-8.jpg`, alt: 'Barra de La Placeta' },
+  ] as GalleryImage[],
+
+  reviews: [
+    { text: 'Bar de tapas y bocatas, atención súper rápida. Calidad-precio muy bien. Terraza exterior.', author: 'Reseña en Google' },
+    { text: 'Lugar perfecto para tomar unas cervezas y unas tapas.', author: 'Reseña en Google' },
+    { text: 'Lejos del bullicio, en el centro histórico de Alcoy. Buen trato y precio estupendo.', author: 'Reseña en Google' },
+    { text: 'Ambiente agradable, buen trato por parte del personal. Me encantan sus desayunos.', author: 'Reseña en Google' },
+  ],
 
   faq: [
     {
@@ -244,9 +309,10 @@ export const site = {
   ] as FaqItem[],
 
   nav: [
-    { href: '#sobre-nosotros', label: 'Nosotros' },
+    { href: '#concepto', label: 'Concepto' },
     { href: '#carta', label: 'Carta' },
     { href: '#especialidades', label: 'Especialidades' },
+    { href: '#eventos', label: 'Eventos' },
     { href: '#horario', label: 'Horario' },
     { href: '#contacto', label: 'Contacto' },
   ],
