@@ -32,7 +32,9 @@ export interface GalleryImage {
   alt: string;
 }
 
-const BASE = import.meta.env.BASE_URL;
+const BASE = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
 
 export const site = {
   name: 'Cervecería La Placeta',
