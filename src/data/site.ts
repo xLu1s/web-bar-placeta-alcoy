@@ -1,5 +1,22 @@
 export type OpeningRange = [open: string, close: string];
 
+export type IconName =
+  | 'phone'
+  | 'mail'
+  | 'pin'
+  | 'instagram'
+  | 'facebook'
+  | 'star'
+  | 'check'
+  | 'alert'
+  | 'beer'
+  | 'coffee'
+  | 'tapas'
+  | 'group'
+  | 'calendar'
+  | 'glass'
+  | 'menu';
+
 export interface OpeningDay {
   /** Human label in Spanish, e.g. "Lunes". */
   label: string;
@@ -199,7 +216,7 @@ export const site = {
   hero: {
     video: `${BASE}video/hero.mp4`,
     poster: `${BASE}images/hero.jpg`,
-    hasVideo: false,
+    hasVideo: true,
   },
 
   concept: {
@@ -220,19 +237,19 @@ export const site = {
 
   specialties: [
     {
-      icon: 'beer',
+      icon: 'beer' as IconName,
       title: 'Cervezas con carácter',
       text: 'Variedad de cervezas nacionales e importación, bien tiradas y a su temperatura.',
       image: `${BASE}images/especialidad-cerveza.jpg`,
     },
     {
-      icon: 'tapas',
+      icon: 'tapas' as IconName,
       title: 'Tapas para compartir',
       text: 'Fríos, calientes, clásicos y de la casa: la mesa siempre llena al centro.',
       image: `${BASE}images/especialidad-tapas.jpg`,
     },
     {
-      icon: 'coffee',
+      icon: 'coffee' as IconName,
       title: 'Desayunos de barrio',
       text: 'Empieza el día como en casa: tostadas, bocadillos y café de los de siempre.',
       image: `${BASE}images/especialidad-desayuno.jpg`,
@@ -245,17 +262,17 @@ export const site = {
     lead: 'Grupos, cumpleaños, almuerzos, cenas de empresa o simplemente juntar a la cuadrilla: te preparamos la mesa y los menús a tu gusto.',
     items: [
       {
-        icon: 'group',
+        icon: 'group' as IconName,
         title: 'Grupos y celebraciones',
         text: 'Menús a tu medida y espacio reservado para grupos grandes.',
       },
       {
-        icon: 'calendar',
+        icon: 'calendar' as IconName,
         title: 'Fiestas de Moros y Cristianos',
         text: 'Vive la fiesta desde el centro, con el recorrido festero a un paso.',
       },
       {
-        icon: 'glass',
+        icon: 'glass' as IconName,
         title: 'Almuerzos y cenas',
         text: 'De la cervecita del mediodía a la cena tranquila de fin de semana.',
       },
@@ -264,14 +281,16 @@ export const site = {
   },
 
   gallery: [
-    { src: `${BASE}images/gallery-1.jpg`, alt: 'Cerveza recién tirada en La Placeta' },
-    { src: `${BASE}images/gallery-2.jpg`, alt: 'Tapas para compartir en La Placeta' },
-    { src: `${BASE}images/gallery-3.jpg`, alt: 'Bocadillo de La Placeta' },
+    { src: `${BASE}images/gallery-1.jpg`, alt: 'Croquetas de jamón de La Placeta' },
+    { src: `${BASE}images/gallery-2.jpg`, alt: 'Tortilla de patatas de La Placeta' },
+    { src: `${BASE}images/gallery-3.jpg`, alt: 'Interior del bar La Placeta' },
     { src: `${BASE}images/gallery-4.jpg`, alt: 'Terraza de La Placeta en el centro de Alcoy' },
-    { src: `${BASE}images/gallery-5.jpg`, alt: 'Interior del bar La Placeta' },
-    { src: `${BASE}images/gallery-6.jpg`, alt: 'Desayuno con tostada y café' },
-    { src: `${BASE}images/gallery-7.jpg`, alt: 'Detalle de tapas calientes' },
-    { src: `${BASE}images/gallery-8.jpg`, alt: 'Barra de La Placeta' },
+    { src: `${BASE}images/gallery-5.jpg`, alt: 'Bocadillo de La Placeta' },
+    { src: `${BASE}images/gallery-6.jpg`, alt: 'Ensaladilla rusa sobre tosta' },
+    { src: `${BASE}images/gallery-7.jpg`, alt: 'Pulpo a la gallega' },
+    { src: `${BASE}images/gallery-8.jpg`, alt: 'Calamares a la romana' },
+    { src: `${BASE}images/gallery-9.jpg`, alt: 'Mesa de tapas para compartir' },
+    { src: `${BASE}images/gallery-10.jpg`, alt: 'Cervezas frías en la barra' },
   ] as GalleryImage[],
 
   reviews: [

@@ -1,0 +1,49 @@
+---
+import Icon from '../ui/Icon.astro';
+import { site } from '../../data/site';
+---
+
+<section class="section contact-cta" id="contacto">
+  <div class="container contact">
+    <div class="contact-card" data-reveal>
+      <span class="eyebrow eyebrow--gold">Reservas y contacto</span>
+      <h2>¿Te guardamos mesa?</h2>
+      <p>Llámanos y te ayudamos a organizar tu visita o tu grupo.</p>
+      <ul class="contact-list">
+        <li>
+          <Icon name="phone" size={22} />
+          <a href={site.contact.phoneHref}>{site.contact.phone}</a>
+        </li>
+        <li>
+          <Icon name="mail" size={22} />
+          <a href={site.contact.emailHref}>{site.contact.email}</a>
+        </li>
+        <li>
+          <Icon name="pin" size={22} />
+          <span>{site.address.street}, {site.address.postalCode} {site.address.locality}</span>
+        </li>
+      </ul>
+      <div class="contact-actions">
+        <a class="btn btn--gold" href={site.contact.phoneHref}>Llamar ahora</a>
+      </div>
+    </div>
+
+    <div data-reveal>
+      <h2>Síguenos el día a día</h2>
+      <p>
+        En nuestras redes compartimos las tapas del día, novedades y el ambiente
+        de la placeta. ¡Nos encantará verte por allí!
+      </p>
+      <div class="contact-actions">
+        <a class="btn btn--outline" href={site.contact.instagram} target="_blank" rel="noopener">
+          <Icon name="instagram" size={20} />
+          Instagram
+        </a>
+        <a class="btn btn--outline" href={site.contact.facebook} target="_blank" rel="noopener">
+          <Icon name="facebook" size={20} />
+          Facebook
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

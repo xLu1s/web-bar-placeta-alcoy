@@ -1,0 +1,31 @@
+---
+import Icon from '../ui/Icon.astro';
+import { site } from '../../data/site';
+---
+
+<section class="section" id="especialidades">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <span class="eyebrow">Especialidades</span>
+      <h2>Lo que nos hace La Placeta</h2>
+      <p>De la primera caña del día a la última tapa de la noche.</p>
+    </div>
+
+    <div class="spec-list">
+      {site.specialties.map((item, index) => (
+        <article class={`spec-item ${index % 2 === 1 ? 'spec-item--reverse' : ''}`} data-reveal>
+          <div class="spec-item__media">
+            <img src={item.image} alt={item.title} loading="lazy" width="900" height="620" />
+          </div>
+          <div class="spec-item__body">
+            <div class="card__icon">
+              <Icon name={item.icon} size={26} />
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

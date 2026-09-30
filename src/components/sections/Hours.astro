@@ -1,0 +1,49 @@
+---
+import { site } from '../../data/site';
+
+const mapSrc = `https://maps.google.com/maps?q=${site.geo.lat},${site.geo.lng}&z=17&hl=es&output=embed`;
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${site.geo.lat},${site.geo.lng}`;
+---
+
+<section class="section" id="horario">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Horario y ubicación</span>
+      <h2>Te esperamos en el centro</h2>
+      <p>{site.address.street}, {site.address.postalCode} {site.address.locality} ({site.address.region})</p>
+    </div>
+
+    <div class="hours-map">
+      <table class="hours-table" data-reveal>
+        <caption class="sr-only" style="position:absolute;left:-9999px">Horario semanal</caption>
+        <tbody>
+          {site.hours.map((day) => (
+            <tr data-jsday={day.jsDay}>
+              <th scope="row">{day.label}</th>
+              <td>
+                {day.closed
+                  ? <span class="closed">Cerrado</span>
+                  : day.ranges.map((range) => `${range[0]}–${range[1]}`).join(' · ')}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div data-reveal>
+        <div class="map-frame">
+          <iframe
+            src={mapSrc}
+            title={`Mapa de ${site.name} en Alcoi`}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+        <div class="contact-actions">
+          <a class="btn" href={mapLink} target="_blank" rel="noopener">Cómo llegar</a>
+          <a class="btn btn--outline" href={site.contact.phoneHref}>Llamar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

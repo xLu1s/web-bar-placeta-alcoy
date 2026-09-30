@@ -1,0 +1,21 @@
+---
+import { site } from '../../data/site';
+---
+
+<section class="section section--alt" id="faq">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2>Antes de venir</h2>
+    </div>
+
+    <div class="faq">
+      {site.faq.map((item) => (
+        <details data-reveal>
+          <summary>{item.q}</summary>
+          <div class="faq__body"><p>{item.a}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

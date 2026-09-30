@@ -1,0 +1,24 @@
+---
+import { site } from '../../data/site';
+---
+
+<section class="section" id="concepto">
+  <div class="container concept">
+    <div class="concept__intro" data-reveal>
+      <span class="eyebrow">{site.concept.eyebrow}</span>
+      <h2>{site.concept.title}</h2>
+      <p class="concept__lead">{site.concept.lead}</p>
+      {site.concept.paragraphs.map((text) => <p>{text}</p>)}
+    </div>
+
+    <ul class="pillars" data-reveal>
+      {site.concept.pillars.map((pillar) => (
+        <li>
+          <span class="pillars__dot" aria-hidden="true"></span>
+          <strong>{pillar.title}</strong>
+          <span>{pillar.text}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

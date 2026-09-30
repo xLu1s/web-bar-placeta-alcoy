@@ -1,0 +1,56 @@
+---
+import Icon from '../ui/Icon.astro';
+import { site } from '../../data/site';
+
+const ratingText = site.rating.value.toFixed(1).replace('.', ',');
+---
+
+<section class="hero" id="inicio">
+  <div class="hero__media">
+    {site.hero.hasVideo && (
+      <video
+        class="hero__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster={site.hero.poster}
+        aria-hidden="true">
+        <source src={site.hero.video} type="video/mp4" />
+      </video>
+    )}
+    <div class="hero__scrim" aria-hidden="true"></div>
+  </div>
+
+  <div class="container hero__content">
+    <span class="hero__kicker">Cervecería · Tapas · Alcoi</span>
+    <h1>
+      La tapa, en el <span class="accent">corazón de Alcoy</span>
+    </h1>
+    <p class="hero__lead">
+      Cerveza bien tirada, tapas para compartir y desayunos de barrio en el casco
+      histórico. Un clásico donde siempre apetece parar.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--lg" href={site.contact.phoneHref}>
+        <Icon name="phone" size={20} />
+        Llamar y reservar
+      </a>
+      <a class="btn btn--light btn--lg" href="#carta">Ver la carta</a>
+    </div>
+
+    <div class="hero__meta">
+      <span class="status" id="open-status" data-state="unknown">
+        <span id="open-status-text">Consultando horario…</span>
+      </span>
+      <span>
+        <Icon name="pin" size={18} />
+        {site.address.street}, {site.address.locality}
+      </span>
+      <span>
+        <Icon name="star" size={18} />
+        {ratingText} · {site.rating.count} reseñas
+      </span>
+    </div>
+  </div>
+</section>

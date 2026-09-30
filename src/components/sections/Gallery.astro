@@ -1,0 +1,19 @@
+---
+import { site } from '../../data/site';
+---
+
+<section class="section" id="galeria">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <span class="eyebrow">Galería</span>
+      <h2>Un vistazo a La Placeta</h2>
+    </div>
+    <div class="gallery" data-reveal>
+      {site.gallery.map((image, index) => (
+        <a href={image.src} target="_blank" rel="noopener" class={index % 5 === 0 ? 'gallery__item--wide' : ''}>
+          <img src={image.src} alt={image.alt} loading="lazy" />
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

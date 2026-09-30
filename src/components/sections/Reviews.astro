@@ -1,0 +1,30 @@
+---
+import { site } from '../../data/site';
+
+const ratingText = site.rating.value.toFixed(1).replace('.', ',');
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${site.geo.lat},${site.geo.lng}`;
+---
+
+<section class="section section--alt" id="opiniones">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <span class="eyebrow">Opiniones</span>
+      <h2>{ratingText} en Google</h2>
+      <p>Más de {site.rating.count} personas ya han valorado su visita a La Placeta.</p>
+    </div>
+
+    <div class="reviews">
+      {site.reviews.map((review) => (
+        <figure class="review" data-reveal>
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <blockquote>“{review.text}”</blockquote>
+          <figcaption>{review.author}</figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="section-head section-head--center" style="margin-top:2rem;margin-bottom:0" data-reveal>
+      <a class="btn btn--outline" href={mapLink} target="_blank" rel="noopener">Ver opiniones en Google</a>
+    </div>
+  </div>
+</section>

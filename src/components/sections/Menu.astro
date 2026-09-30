@@ -1,0 +1,57 @@
+---
+import Icon from '../ui/Icon.astro';
+import { site } from '../../data/site';
+---
+
+<section class="section section--alt" id="carta">
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <span class="eyebrow">Nuestra carta</span>
+      <h2>Tapas frías y calientes</h2>
+      <p>{site.menu.intro}</p>
+    </div>
+
+    <div class="menu-toolbar" data-reveal>
+      <button class="chip" type="button" data-filter="all" aria-pressed="true">Todas</button>
+      {site.menu.categories.map((cat) => (
+        <button class="chip" type="button" data-filter={cat.id} aria-pressed="false">{cat.title}</button>
+      ))}
+    </div>
+
+    <div class="menu-panel" data-reveal>
+      {site.menu.categories.map((cat) => (
+        <div class="menu-category" data-category={cat.id}>
+          <div class="menu-category__head">
+            <h3>{cat.title}</h3>
+          </div>
+          <ul class="menu-list">
+            {cat.items.map((item) => (
+              <li>
+                <span>
+                  <span class="name">{item.name}</span>
+                  {item.desc && <span class="desc"> — {item.desc}</span>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <p class="allergen-note">
+        <Icon name="alert" size={22} />
+        <span>{site.menu.allergenNote}</span>
+      </p>
+
+      <figure class="menu-carta">
+        <img
+          src={site.menu.image}
+          alt={site.menu.imageAlt}
+          loading="lazy"
+          width="708"
+          height="812"
+        />
+        <figcaption>{site.menu.imageAlt}</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
