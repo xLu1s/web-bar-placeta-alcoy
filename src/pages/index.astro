@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import Landing from '../components/Landing.astro';
+import { site } from '../data/site';
+
+const title = `${site.name} — Bar de tapas en el centro de Alcoy`;
+const description =
+  'Bar de tapas, bocadillos y cervezas en el casco histórico de Alcoy. Terraza, desayunos y trato de barrio en Carrer Pintor Casanova, 3. Llama y reserva.';
+---
+
+<Base title={title} description={description}>
+  <Landing />
+</Base>

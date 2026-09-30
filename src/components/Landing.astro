@@ -1,0 +1,521 @@
+---
+import { site } from '../data/site';
+
+const year = new Date().getFullYear();
+
+const ratingText = site.rating.value.toFixed(1).replace('.', ',');
+
+const starString = (value: number) => {
+  const full = Math.round(value);
+  return '★★★★★'.slice(0, full) + '☆☆☆☆☆'.slice(0, 5 - full);
+};
+
+const mapSrc = `https://maps.google.com/maps?q=${site.geo.lat},${site.geo.lng}&z=17&hl=es&output=embed`;
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${site.geo.lat},${site.geo.lng}`;
+
+const themes = [
+  {
+    title: 'Terraza en la placeta',
+    text: 'Un rincón tranquilo en pleno centro para tapear al sol.',
+  },
+  {
+    title: 'Relación calidad-precio',
+    text: 'Tapas generosas y buen precio, como los bares de barrio de siempre.',
+  },
+  {
+    title: 'Trato cercano y servicio rápido',
+    text: 'Atención de toda la vida: rápida, amable y sin complicaciones.',
+  },
+];
+---
+
+<header class="app-bar" id="app-bar">
+  <div class="container app-bar__inner">
+    <a class="brand" href="#inicio" aria-label={`${site.name}, inicio`}>
+      <svg class="brand__mark" viewBox="0 0 128 128" aria-hidden="true">
+        <defs>
+          <linearGradient id="ab" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#F7C948"></stop>
+            <stop offset="1" stop-color="#E08A1E"></stop>
+          </linearGradient>
+        </defs>
+        <g transform="rotate(-6 64 64)">
+          <rect x="18" y="18" width="92" height="92" rx="17" fill="#D03229" stroke="#141414" stroke-width="6"></rect>
+          <rect x="27" y="27" width="74" height="74" rx="11" fill="none" stroke="#FBF6EE" stroke-width="2.5" opacity="0.5"></rect>
+        </g>
+        <path d="M36 52 q0 -21 30 -21 q30 0 30 21 z" fill="#FFFFFF" stroke="#141414" stroke-width="5" stroke-linejoin="round"></path>
+        <path d="M40 52 h46 v44 a6 6 0 0 1 -6 6 h-34 a6 6 0 0 1 -6 -6 z" fill="url(#ab)" stroke="#141414" stroke-width="5" stroke-linejoin="round"></path>
+        <path d="M86 64 h8 a9 9 0 0 1 9 9 v10 a9 9 0 0 1 -9 9 h-8" fill="none" stroke="#141414" stroke-width="5" stroke-linejoin="round"></path>
+      </svg>
+      <span class="brand__text">
+        <small>Cervecería</small>
+        <strong>La Placeta</strong>
+      </span>
+    </a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <span></span>
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Principal">
+      {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a class="btn btn--desktop" href={site.contact.phoneHref}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        Llamar
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido">
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="container hero__grid">
+      <div data-reveal>
+        <span class="status" id="open-status" data-state="unknown">
+          <span id="open-status-text">Consultando horario…</span>
+        </span>
+        <h1>
+          Tapas con alma en el <span class="accent">centro de Alcoy</span>
+        </h1>
+        <p class="hero__lead">
+          {site.name} es ese bar de barrio del casco histórico donde siempre apetece
+          parar: cervezas bien tiradas, bocadillos, desayunos y tapas para compartir
+          en una placeta tranquila.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--lg" href={site.contact.phoneHref}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            Llamar y reservar
+          </a>
+          <a class="btn btn--outline btn--lg" href="#carta">Ver la carta</a>
+        </div>
+        <div class="hero__meta">
+          <span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            {site.address.street}, {site.address.locality}
+          </span>
+          <span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            {site.contact.phone}
+          </span>
+        </div>
+      </div>
+
+      <div class="hero__badge" data-reveal>
+        <span class="stars" aria-hidden="true">{starString(site.rating.value)}</span>
+        <strong>{ratingText}</strong>
+        <span>{site.rating.count} reseñas en Google</span>
+        <em>Tapas &amp; cerveza</em>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE NOSOTROS -->
+  <section class="section" id="sobre-nosotros">
+    <div class="container story">
+      <div data-reveal>
+        <span class="eyebrow">Quiénes somos</span>
+        <h2>Un clásico del casco histórico de Alcoi</h2>
+        <p>
+          En una placeta tranquila del centro, a un paso de los teatros y del
+          recorrido de las Fiestas de Moros y Cristianos, La Placeta es punto de
+          encuentro para vecinos, festeros y visitantes.
+        </p>
+        <p>
+          Aquí se viene a lo de siempre: un café por la mañana, una caña a mediodía
+          o unas tapas al caer la tarde. Cocina honesta, producto de siempre y un
+          trato que hace que te sientas como en casa.
+        </p>
+      </div>
+
+      <div class="story__panel" data-reveal>
+        <h3>Lo que nos hace La Placeta</h3>
+        <ul class="story__facts">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span>Cervezas nacionales e importación</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span>Tapas, bocadillos y tostadas hechos al momento</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span>Desayunos de barrio y terraza exterior</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span>Menús a tu gusto con lista de alérgenos</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARTA -->
+  <section class="section section--alt" id="carta">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow">Nuestra carta</span>
+        <h2>Tapas frías y calientes</h2>
+        <p>{site.menu.intro}</p>
+      </div>
+
+      <div class="menu-toolbar" data-reveal>
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">Todas</button>
+        {site.menu.categories.map((cat) => (
+          <button class="chip" type="button" data-filter={cat.id} aria-pressed="false">{cat.title}</button>
+        ))}
+      </div>
+
+      <div class="menu-panel" data-reveal>
+        {site.menu.categories.map((cat) => (
+          <div class="menu-category" data-category={cat.id}>
+            <div class="menu-category__head">
+              <h3>{cat.title}</h3>
+            </div>
+            <ul class="menu-list">
+              {cat.items.map((item) => (
+                <li>
+                  <span>
+                    <span class="name">{item.name}</span>
+                    {item.desc && <span class="desc"> — {item.desc}</span>}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
+        <p class="allergen-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg>
+          <span>{site.menu.allergenNote}</span>
+        </p>
+
+        <div class="menu-carta">
+          <img src={site.menu.image} alt={site.menu.imageAlt} loading="lazy" width="708" height="812" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESPECIALIDADES -->
+  <section class="section" id="especialidades">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow">Especialidades</span>
+        <h2>Lo que más nos piden</h2>
+        <p>De la primera caña del día a la última tapa de la noche.</p>
+      </div>
+
+      <div class="grid grid--3">
+        {site.specialties.map((item) => (
+          <article class="card" data-reveal>
+            <div class="card__icon">
+              {item.icon === 'beer' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 11h1a3 3 0 0 1 0 6h-1"></path><path d="M9 12v6"></path><path d="M13 12v6"></path><path d="M14 7.5c0-1-1-1.5-1-3 0 1.5-1 2-1 3"></path><path d="M5 7h14v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path></svg>
+              )}
+              {item.icon === 'coffee' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"></path><path d="M6 2v3"></path><path d="M10 2v3"></path><path d="M14 2v3"></path></svg>
+              )}
+              {item.icon === 'sun' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+              )}
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {site.gallery.length > 0 && (
+    <section class="section section--alt" id="galeria">
+      <div class="container">
+        <div class="section-head section-head--center" data-reveal>
+          <span class="eyebrow">Galería</span>
+          <h2>Un vistazo a La Placeta</h2>
+        </div>
+        <div class="gallery" data-reveal>
+          {site.gallery.map((image) => (
+            <a href={image.src} target="_blank" rel="noopener">
+              <img src={image.src} alt={image.alt} loading="lazy" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- OPINIONES -->
+  <section class="section" id="opiniones">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow">Opiniones</span>
+        <h2>{ratingText}★ en Google</h2>
+        <p>Más de {site.rating.count} personas ya han valorado su visita a La Placeta.</p>
+      </div>
+
+      <div class="reviews">
+        {themes.map((theme) => (
+          <article class="review" data-reveal>
+            <span class="stars" aria-hidden="true">★★★★★</span>
+            <blockquote>{theme.text}</blockquote>
+            <figcaption>{theme.title}</figcaption>
+          </article>
+        ))}
+      </div>
+
+      <div class="section-head section-head--center" style="margin-top:2rem;margin-bottom:0" data-reveal>
+        <a class="btn btn--outline" href={mapLink} target="_blank" rel="noopener">Ver opiniones en Google</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HORARIO Y UBICACIÓN -->
+  <section class="section section--alt" id="horario">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Horario y ubicación</span>
+        <h2>Te esperamos en el centro</h2>
+        <p>{site.address.street}, {site.address.postalCode} {site.address.locality} ({site.address.region})</p>
+      </div>
+
+      <div class="hours-map">
+        <table class="hours-table" data-reveal>
+          <caption class="sr-only" style="position:absolute;left:-9999px">Horario semanal</caption>
+          <tbody>
+            {site.hours.map((day) => (
+              <tr data-jsday={day.jsDay}>
+                <th scope="row">{day.label}</th>
+                <td>
+                  {day.closed
+                    ? <span class="closed">Cerrado</span>
+                    : day.ranges.map((range) => `${range[0]}–${range[1]}`).join(' · ')}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div data-reveal>
+          <div class="map-frame">
+            <iframe
+              src={mapSrc}
+              title={`Mapa de ${site.name} en Alcoi`}
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+          </div>
+          <div class="contact-actions">
+            <a class="btn" href={mapLink} target="_blank" rel="noopener">Cómo llegar</a>
+            <a class="btn btn--outline" href={site.contact.phoneHref}>Llamar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2>Antes de venir</h2>
+      </div>
+
+      <div class="faq">
+        {site.faq.map((item) => (
+          <details data-reveal>
+            <summary>{item.q}</summary>
+            <div class="faq__body"><p>{item.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="section section--alt" id="contacto">
+    <div class="container contact">
+      <div class="contact-card" data-reveal>
+        <span class="eyebrow" style="color:var(--brand-gold)">Reservas y contacto</span>
+        <h2>¿Te guardamos mesa?</h2>
+        <p>Llámanos y te ayudamos a organizar tu visita o tu grupo.</p>
+        <ul class="contact-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <a href={site.contact.phoneHref}>{site.contact.phone}</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg>
+            <a href={site.contact.emailHref}>{site.contact.email}</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>{site.address.street}, {site.address.postalCode} {site.address.locality}</span>
+          </li>
+        </ul>
+        <div class="contact-actions">
+          <a class="btn" href={site.contact.phoneHref} style="--btn-bg:#f7c948;--btn-fg:#211a14">Llamar ahora</a>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <h2>Síguenos el día a día</h2>
+        <p style="color:var(--ink-soft)">
+          En nuestras redes compartimos las tapas del día, novedades y el ambiente
+          de la placeta. ¡Nos encantará verte por allí!
+        </p>
+        <div class="contact-actions">
+          <a class="btn btn--outline" href={site.contact.instagram} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg>
+            Instagram
+          </a>
+          <a class="btn btn--outline" href={site.contact.facebook} target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            Facebook
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <svg class="brand__mark" viewBox="0 0 128 128" aria-hidden="true">
+        <g transform="rotate(-6 64 64)">
+          <rect x="18" y="18" width="92" height="92" rx="17" fill="#D03229" stroke="#141414" stroke-width="6"></rect>
+        </g>
+        <path d="M36 52 q0 -21 30 -21 q30 0 30 21 z" fill="#FFFFFF" stroke="#141414" stroke-width="5" stroke-linejoin="round"></path>
+        <path d="M40 52 h46 v44 a6 6 0 0 1 -6 6 h-34 a6 6 0 0 1 -6 -6 z" fill="#E08A1E" stroke="#141414" stroke-width="5" stroke-linejoin="round"></path>
+        <path d="M86 64 h8 a9 9 0 0 1 9 9 v10 a9 9 0 0 1 -9 9 h-8" fill="none" stroke="#141414" stroke-width="5" stroke-linejoin="round"></path>
+      </svg>
+      <strong>Cervecería La Placeta</strong>
+    </div>
+    <div class="footer__links">
+      <a href={site.contact.phoneHref}>{site.contact.phone}</a>
+      <a href={site.contact.emailHref}>{site.contact.email}</a>
+      <a href={site.contact.instagram} target="_blank" rel="noopener">Instagram</a>
+      <a href={site.contact.facebook} target="_blank" rel="noopener">Facebook</a>
+    </div>
+    <p style="margin:0;flex-basis:100%">© {year} {site.name} · {site.address.street}, {site.address.postalCode} {site.address.locality}</p>
+  </div>
+</footer>
+
+<a class="fab" href={site.contact.phoneHref} aria-label={`Llamar a ${site.name}`}>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+  Llamar
+</a>
+
+<script type="application/json" id="hours-data" set:html={JSON.stringify(site.hours)}></script>
+
+<script>
+  const appBar = document.getElementById('app-bar');
+  const navToggle = document.getElementById('nav-toggle');
+
+  navToggle?.addEventListener('click', () => {
+    const open = appBar?.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(Boolean(open)));
+  });
+
+  document.querySelectorAll('#nav a').forEach((link) => {
+    link.addEventListener('click', () => {
+      appBar?.classList.remove('is-open');
+      navToggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  const onScroll = () => appBar?.classList.toggle('is-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+    );
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add('is-visible'));
+  }
+
+  // Menu category filter
+  const chips = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const categories = document.querySelectorAll<HTMLElement>('[data-category]');
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      categories.forEach((cat) => {
+        const show = filter === 'all' || cat.dataset.category === filter;
+        cat.hidden = !show;
+      });
+    });
+  });
+
+  // "Open now" widget + today's row highlight
+  type Range = [string, string];
+  type Day = { jsDay: number; ranges: Range[]; closed?: boolean };
+  const hoursData = JSON.parse(document.getElementById('hours-data')?.textContent || '[]') as Day[];
+  const statusEl = document.getElementById('open-status');
+  const statusText = document.getElementById('open-status-text');
+
+  const toMinutes = (value: string) => {
+    const [h, m] = value.split(':').map(Number);
+    return h * 60 + m;
+  };
+
+  const isOpenAt = (day: Day, minutes: number) => {
+    if (day.closed) return false;
+    return day.ranges.some(([open, close]) => {
+      const start = toMinutes(open);
+      let end = toMinutes(close);
+      if (end <= start) end += 24 * 60; // closes after midnight
+      return minutes >= start && minutes < end;
+    });
+  };
+
+  const now = new Date();
+  const today = hoursData.find((day) => day.jsDay === now.getDay());
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+  const previousDay = hoursData.find((day) => day.jsDay === (now.getDay() + 6) % 7);
+  const openFromYesterday =
+    previousDay && !previousDay.closed
+      ? previousDay.ranges.some(([open, close]) => {
+          const start = toMinutes(open);
+          let end = toMinutes(close);
+          if (end <= start) end += 24 * 60;
+          return nowMinutes + 24 * 60 >= start && nowMinutes + 24 * 60 < end;
+        })
+      : false;
+
+  const openNow = (today ? isOpenAt(today, nowMinutes) : false) || openFromYesterday;
+
+  if (statusEl && statusText) {
+    statusEl.dataset.state = openNow ? 'open' : 'closed';
+    statusText.textContent = openNow ? 'Abierto ahora' : 'Cerrado ahora';
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-jsday]').forEach((row) => {
+    if (Number(row.dataset.jsday) === now.getDay()) row.classList.add('is-today');
+  });
+</script>

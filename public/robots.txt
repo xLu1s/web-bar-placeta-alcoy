@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://xLu1s.github.io/web-bar-placeta-alcoy/sitemap-index.xml
