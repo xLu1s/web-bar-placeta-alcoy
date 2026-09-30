@@ -163,8 +163,6 @@ export const site = {
       'Tapas de siempre, hechas en casa y para compartir. Precios pendientes de actualizar — consúltanos o llámanos.',
     allergenNote:
       'Disponemos de la lista completa de alérgenos de todos nuestros platos. Pídenosla y te ayudamos a elegir.',
-    image: `${BASE}images/menu.png`,
-    imageAlt: 'Carta de tapas frías y calientes de La Placeta',
     categories: [
       {
         id: 'frias',

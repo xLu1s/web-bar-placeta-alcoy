@@ -805,20 +805,6 @@ p {
   color: var(--brand-red);
 }
 
-.menu-carta {
-  margin-top: 2rem;
-  display: grid;
-  gap: 1rem;
-  justify-items: center;
-}
-
-.menu-carta img {
-  width: min(100%, 560px);
-  border-radius: var(--r-md);
-  border: 1px solid var(--line);
-  box-shadow: var(--elev-3);
-}
-
 /* -------------------------------------------------------------- Gallery -- */
 .gallery {
   display: grid;
@@ -1503,14 +1489,6 @@ p {
 
 .menu-list li::before {
   background: linear-gradient(135deg, #f7c948, #e08a1e);
-}
-
-.menu-carta figcaption {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
 }
 
 /* Galería */
