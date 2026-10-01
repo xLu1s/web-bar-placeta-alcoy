@@ -191,10 +191,10 @@ export const site = {
           { name: 'Callos' },
           { name: 'Sangre con cebolla' },
           { name: 'Higaditos encebollados' },
-          { name: 'Huevos georgiev' },
+          { name: 'Huevos georgeva' },
           { name: 'Huevos estrellados con jamón' },
           {
-            name: 'Plescaviso',
+            name: 'Pleskaviska',
             desc: 'Carne picada rellena de queso fundido',
           },
           { name: 'Pulpo a la gallega' },
